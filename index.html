@@ -1,10 +1,118 @@
-<head><script defer src="main.js"></script></head><header id="header">
-    <nav id="navigation">
-        <button class="home nav__button">Home</button>
-        <button class="menu nav__button">Menu</button>
-        <button b class="about nav__button">About</button>
-    </nav>
-</header>
-<div id="content">
-
+<head><script defer src="main.js"></script></head><div class="container">
+    <div id="sidebar">
+        <div class="tasks">
+            <h2 class="tasks-text">Tasks</h2>
+            <div class="task-list">
+                <div class="inbox">Inbox</div>
+                <div class="today-task">Today</div>
+                <div class="week-task">Week</div>
+            </div>
+        </div>
+        <div class="projects">
+            <h2 class="projects-text">Projects</h2>
+            <div class="project-list"></div>
+        </div>
+    </div>
+    
+    <header id="header">
+        <p class="header-text">// Todo List</p>
+    </header>
+    
+    <main id="main">
+        <!-- Updated main-header with sorting dropdown -->
+        <div class="main-header-box" style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="main-header">Main</h2>
+            <div class="task-controls">
+                <select id="sort-select">
+                    <option value="none">Sort By...</option>
+                    <option value="date">Date</option>
+                    <option value="priority">Priority</option>
+                </select>
+                <button id="filter-active" class="filter-btn">Active Tasks</button>
+                <button id="filter-completed" class="filter-btn">Completed</button>
+                <button id="filter-overdue" class="filter-btn">Overdue</button>
+            </div>
+        </div>
+        <div class="content"></div>
+        <div class="newtodo">+</div>
+    </main>
+    
+    <div class="task-details hidden">
+    
+    </div>
+    
+    
+    <div class="overlay-new">
+        <form class="create-new">
+            <div class="create-new__header">
+                <h2 class="create-new__heading">// Create a new...</h2>
+                <div class="create-new__close">×</div>
+            </div>
+            <div class="create-new__content">
+                <div class="create-new__sidebar">
+                    <ul class="create-new__options">
+                        <li class="create-new__option-items overlay-task">Task</li>
+                        <li class="create-new__option-items project active">Project</li>
+                    </ul>
+                </div>
+                <div class="create-new__form">
+                    <div class="task-form hidden">
+                        <input type="text" id="task-title" maxlenght="50" class="create-new__input" placeholder="Enter task title" required>
+                        
+                        <textarea id="task-description" class="create-new__input" maxlenght="255" placeholder="Enter task description(optinal)"></textarea>
+    
+                        <div class="task-form__row">                     
+                            <label for="task-date">Due Date:</label>
+                            <input type="date" id="task-date" class="create-new__input">
+                        </div>
+    
+                        <div  class="task-form__row">
+                            <label for="task-priority">Priority:</label>
+                            <select id="task-priority" class="create-new__input">
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    
+                        <div  class="task-form__row">
+                            <label for="task-project">Project:</label>
+                            <select id="task-project" class="create-new__input"></select>
+                        </div>
+                        <button type="button" class="create-new__button" id="create-task">Add Task</button>
+                    </div>
+    
+                    <div class="project-form">
+                        <label for="project-name">Project Name:</label>
+                        <input type="text" maxlenght="20" id="project-name" class="create-new__input" placeholder="Enter project name">
+                        <button type="button" class="create-new__button" id="create-project">Add Project</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="overlay-edit hidden">
+        <div class="task-edit-form">
+            <h2>Edit Task</h2>
+            <label>Title:</label>
+            <input type="text" maxlenght="50" id="edit-task-title" required>
+            
+            <label>Description:</label>
+            <textarea id="edit-task-description" maxlenght="255"></textarea>
+            
+            <label>Due Date:</label>
+            <input type="date" id="edit-task-date" required>
+            
+            <label>Priority:</label>
+            <select id="edit-task-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+    
+            <button id="save-edit-task">Save</button>
+            <button class="close-edit">Cancel</button>
+        </div>
+    </div>    
 </div>
