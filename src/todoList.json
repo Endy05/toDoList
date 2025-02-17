@@ -1,0 +1,89 @@
+{
+    "projects": [
+        {
+            "name": "Work",
+            "tasks": [
+                {
+                    "title": "Quarterly Report",
+                    "description": "Prepare Q1 financial report for stakeholders",
+                    "dueDate": "2025-04-15",
+                    "priority": "high",
+                    "completed": false
+                },
+                {
+                    "title": "Team Meeting",
+                    "description": "Weekly sync with development team",
+                    "dueDate": "2025-01-29",
+                    "priority": "medium",
+                    "completed": false
+                },
+                {
+                    "title": "Client Presentation",
+                    "description": "Present new features to client",
+                    "dueDate": "2025-02-15",
+                    "priority": "high",
+                    "completed": false
+                }
+            ]
+        },
+        {
+            "name": "Personal",
+            "tasks": [
+                {
+                    "title": "Gym Session",
+                    "description": "Cardio and strength training",
+                    "dueDate": "2025-03-15",
+                    "priority": "medium",
+                    "completed": false
+                },
+                {
+                    "title": "Grocery Shopping",
+                    "description": "Buy fruits, vegetables, and meal prep ingredients",
+                    "dueDate": "2025-01-28",
+                    "priority": "low",
+                    "completed": false
+                },
+                {
+                    "title": "Read Book",
+                    "description": "Finish chapter 5 of 'Clean Code'",
+                    "dueDate": "2025-02-28",
+                    "priority": "low",
+                    "completed": false
+                }
+            ]
+        },
+        {
+            "name": "Home",
+            "tasks": [
+                {
+                    "title": "Fix Leaky Faucet",
+                    "description": "Call plumber or DIY repair",
+                    "dueDate": "2025-05-01",
+                    "priority": "high",
+                    "completed": false
+                },
+                {
+                    "title": "Clean Garage",
+                    "description": "Organize tools and dispose of old items",
+                    "dueDate": "2025-04-03",
+                    "priority": "medium",
+                    "completed": false
+                },
+                {
+                    "title": "Paint Living Room",
+                    "description": "Buy paint and complete painting",
+                    "dueDate": "2025-03-10",
+                    "priority": "low",
+                    "completed": false
+                },
+                {
+                    "title": "Garden Maintenance",
+                    "description": "Trim bushes and plant new flowers",
+                    "dueDate": "2025-05-15",
+                    "priority": "medium",
+                    "completed": false
+                }
+            ]
+        }
+    ]
+}

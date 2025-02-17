@@ -1,0 +1,705 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    background-color: green;
+}
+
+.container {
+    display: grid;
+    grid-template-areas: 
+    "header header header"
+    "sidebar main main"
+    "sidebar main main";
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 80px 2fr 3fr;
+    font-family:Arial, Helvetica, sans-serif;
+    max-width: 1000px;
+}
+
+#sidebar {
+    grid-area: sidebar;
+    background-color: cyan;
+    padding: 15px;
+
+}
+
+#header {
+    background-color: orange;
+    grid-area: header;
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    padding-left: 20px;
+}
+
+#main {
+    background-color: #fff;
+    grid-area: main;
+    position: relative;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    max-height: calc(100vh - 80px); /* Adjust height to fit within the viewport */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+#main::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for WebKit browsers */
+}
+
+.header-text {
+    font-size: 26px;
+}
+
+.main-header-box {
+    padding: 20px;
+    background-color: yellow;
+}
+
+.task-list *, .project * {
+ margin-left: 5px;
+ padding: 5px 15px;
+ border-radius: 10px;
+ max-width: fit-content;
+}
+
+.task-list > div:hover, .project > div:hover {
+    background-color: #ffffffd1;
+}
+
+.task {
+    background-color: rgb(249, 219, 207);
+    margin: 10px;
+    display: flex;
+    padding: 10px;
+    font-size: 14px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.task-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.task.completed {
+    opacity: 0.7;
+    background-color: #e0e0e0;
+}
+
+.task.completed h4 {
+    text-decoration: line-through;
+    color: #666;
+}
+
+.task .task-complete {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.task .task-complete.checked {
+    background-color: green;
+    border-color: green;
+}
+
+.task .task-complete.checked::after {
+    content: '✔';
+    color: white;
+    font-size: 14px;
+}
+
+.task-details-view {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.projects-text, .tasks-text {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.newtodo {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgb(255, 132, 0);
+    border-radius: 100px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 40px;
+    transition: 200ms ease all;
+}
+
+.newtodo:hover {
+    background-color: orangered;
+    color: rgb(189, 189, 189);
+}
+/* Modal background */
+.overlay-new {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden; 
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease; 
+}
+
+/* Modal active state */
+.overlay-new.active {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Modal content box */
+.create-new {
+    background-color: #fff;
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+/* Modal scaling effect on activation */
+.overlay-new.active .create-new {
+    transform: scale(1);
+}
+
+/* Header styling */
+.create-new__header {
+    background-color: orange;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.create-new__heading {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Close button styling */
+.create-new__close {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.create-new__close:hover {
+    color: white;
+}
+
+/* Main content area of modal */
+.create-new__content {
+    display: flex;
+    padding: 20px;
+    min-height: 100px;
+    height: 230px;
+}
+
+/* Sidebar styling */
+.create-new__sidebar {
+    min-width: 120px;
+    border-right: 1px solid #ddd;
+}
+
+.create-new__options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Styling for options in the sidebar */
+.create-new__option-items {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.create-new__option-items:hover {
+    background-color: #f0f0f0;
+    font-weight: 600;
+}
+
+/* Active option styling */
+.create-new__option-items.active {
+    font-weight: 600;
+    background-color: #ffa20055;
+}
+
+/* Add custom indicators for active options */
+.create-new__option-items.active::after {
+    content: "//";
+    position: absolute;
+    right: 10px;
+    column-rule: #ff6347;
+}
+
+/* Colors for specific option types */
+.create-new__option-items.project.active::after {
+    color: #32cd32;
+}
+
+.create-new__option-items.overlay-task.active::after {
+    color: #1e90ff;
+}
+
+/* Remove margin from the last item */
+.create-new__option-items:last-child {
+    margin-bottom: 0;
+}
+
+/* Form styling */
+.create-new__form {
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+}
+
+#project-name {
+    border: none;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+#project-name:focus {
+    outline: none;
+}
+
+.label__project-name {
+    font-size: 14px;
+}
+
+/* Button styling */
+.create-new__button {
+    background-color: orange;
+    border: 1px solid black;
+    padding: 5px 10px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 100px;
+    border-radius: 10px;
+    transition: 200ms ease all;
+}
+
+.create-new__button:hover {
+    background-color: rgb(255, 118, 69);
+}
+
+/* Styling for messages in content */
+.content > p {
+    color: #888;
+    font-size: 16px;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-form label {
+    font-size: 12px;
+}
+
+#task-title, #task-description {
+    border: none;
+    margin-bottom: 10px;
+}
+
+#task-title:focus, #task-description:focus {
+    outline: none;
+}
+
+#task-description {
+    height: 60px;
+    resize: none;
+}
+
+.task-form__row {
+    margin-bottom: 5px;
+}
+
+#task-date, #task-priority, #task-project  {
+    border-radius: 5px;
+    padding: 0 5px;
+    border: 2px solid #02afff;
+}
+
+
+#task-date:focus, #task-priority:focus, #task-project:focus {
+    outline: none;
+    border: 2px solid blue;
+    background-color: #00ffea;
+} 
+
+.project-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.delete-project {
+    width: 20px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.task-details {
+    display: block;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.close-details {
+    padding: 5px 10px;
+    margin:5px;
+}
+
+.delete-task {
+    background-image: url('./images/delete.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    border: none;
+    transition: 200ms ease all;
+    border-radius: 5px;
+}
+
+.edit-task {
+    background-image: url('./images/edit.png');
+    background-size: 15px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    border: none;
+    transition: 200ms ease all;
+    border-radius: 5px;
+}
+
+.edit-task:hover {
+    background-color: yellow;
+    border: 1px solid black;
+}
+
+.delete-task:hover {
+    background-color: orangered;
+    border: 1px solid black;
+}
+
+/* Styles for the task editing overlay */
+.overlay-edit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+/* Styles for the edit task form container */
+.edit-task-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Form typography and spacing */
+.edit-task-form h2 {
+    margin-bottom: 15px;
+}
+
+.edit-task-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.edit-task-form input[type="text"],
+.edit-task-form input[type="date"],
+.edit-task-form textarea,
+.edit-task-form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Container for the form buttons */
+.edit-task-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.edit-task-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-task-buttons button#save-edit-task {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.edit-task-buttons button#save-edit-task:hover {
+    background-color: #218838;
+}
+
+.edit-task-buttons button#cancel-edit-task {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.edit-task-buttons button#cancel-edit-task:hover {
+    background-color: #c82333;
+}
+
+
+.priority {
+    border: 1px solid gray;
+    padding: 1px 5px;
+    border-radius: 5px;
+    background: white;
+}
+
+.priority-low {
+    background-color: greenyellow;
+}
+
+.priority-medium {
+    background-color: yellow;
+}
+
+.priority-high {
+    background-color: rgb(255, 58, 58);
+}
+
+
+.box-date-task {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.box-priority-task {
+    width: 62px;
+    display: flex;
+    justify-content: center;
+}
+
+.details-task {
+    background-image: url('./images/detail.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    transition: 200ms ease all;
+}
+
+.details-task:hover {
+    background-color: greenyellow;
+    border: 1px solid black;
+}
+
+#header-time {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: greenyellow;
+    margin-left: auto;
+    margin-right: 20px;
+    font-size: 20px;
+}
+
+/* New styles for task details modal */
+.overlay-task-details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.details-modal {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeInScale 0.3s ease-in-out;
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details-header h2 {
+    margin: 0;
+}
+
+.details-body {
+    margin-top: 10px;
+    line-height: 1.5;
+}
+
+.close-details {
+    background-color: orange;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.close-details:hover {
+    background-color: darkorange;
+}
+
+#sort-select {
+    padding: 5px;
+    border-radius: 10px;
+    background: lightcyan;
+}
+
+.overdue {
+    opacity: 0.5;
+}
+
+.overdue-title {
+    text-decoration: line-through;
+}
+
+.task.overdue {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.task.overdue .overdue-title {
+    color: #ff0000;
+    text-decoration: line-through;
+}
+
+.task.completed .overdue-title {
+    text-decoration: line-through;
+    color: #666;
+}
+
+.task-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-btn {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: #f0f0f0;
+}
+
+.filter-btn.active {
+    background: orange;
+    color: white;
+}
